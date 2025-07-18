@@ -3,7 +3,6 @@
 <head>
   <title>Googleマップ表示サンプル</title>
   <style>
-    /* 地図のサイズ指定 */
     #map {
       height: 100vh;
       width: 100%;
@@ -15,21 +14,22 @@
 
   <script>
     function initMap() {
-      const tokyo = { lat: 35.6762, lng: 139.6503 }; // 東京の座標
+      const center = { lat: 35.6762, lng: 139.6503 }; // 地図の初期表示位置（東京）
       const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: tokyo,
+        zoom: 10,
+        center: center,
       });
-      new google.maps.Marker({
-        position: tokyo,
-        map: map,
-        title: "東京",
+
+      // ✅ あなたのKMLレイヤーを読み込む部分
+      const kmlLayer = new google.maps.KmlLayer({
+        url: 'https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1MZYXz2u_tau6wFZzR-Tx1EAKuO70bdg',
+        map: map
       });
     }
   </script>
 
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGU9Y4ozFm2lt-cUQMx8guTf-infb6T8A&callback=initMap"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGU9Y4ozFm2lt-cUQMX8guTf-infb6T8A&callback=initMap"
     async
     defer
   ></script>
