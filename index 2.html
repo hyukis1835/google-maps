@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>世界遺産マップ</title>
+  <title>Googleマップ表示サンプル</title>
   <style>
+    /* 地図のサイズ指定 */
     #map {
       height: 100vh;
       width: 100%;
@@ -14,48 +14,25 @@
   <div id="map"></div>
 
   <script>
-    let map;
-
     function initMap() {
-      const savedCenter = JSON.parse(localStorage.getItem("mapCenter"));
-      const savedZoom = JSON.parse(localStorage.getItem("mapZoom"));
-      const center = savedCenter || { lat: 41.9028, lng: 12.4964 }; // デフォルト：ローマ
-      const zoom = savedZoom || 5;
-
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: center,
-        zoom: zoom,
-        gestureHandling: "greedy",
-        disableDoubleClickZoom: false,
-        draggable: true,
-        scrollwheel: true,
+      const tokyo = { lat: 35.6762, lng: 139.6503 }; // 東京の座標
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: tokyo,
       });
-
-      map.addListener("idle", () => {
-        localStorage.setItem("mapCenter", JSON.stringify(map.getCenter().toJSON()));
-        localStorage.setItem("mapZoom", map.getZoom());
-      });
-
-      const kmlUrl = "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1MZYXz2u_tau6wFZzR-Tx1EAKuO70bdg";
-
-      const kmlLayer = new google.maps.KmlLayer({
-        url: kmlUrl,
+      new google.maps.Marker({
+        position: tokyo,
         map: map,
-        preserveViewport: true,
-        suppressInfoWindows: false
-      });
-
-      kmlLayer.addListener("click", function (event) {
-        const content = event.featureData.infoWindowHtml;
-        const infowindow = new google.maps.InfoWindow({
-          content: content,
-          position: event.latLng
-        });
-        infowindow.open(map);
+        title: "東京",
       });
     }
   </script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGU9Y4ozFm2lt-cUQMx8guTf-infb6T8A&callback=initMap" async defer></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGU9Y4ozFm2lt-cUQMx8guTf-infb6T8A&callback=initMap"
+    async
+    defer
+  ></script>
 </body>
 </html>
+
